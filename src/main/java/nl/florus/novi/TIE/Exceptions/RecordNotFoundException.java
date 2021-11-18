@@ -1,4 +1,4 @@
-package nl.florus.novi.huiswerk_assignment1springboot082021.Exceptions;
+package nl.florus.novi.TIE.Exceptions;
 
 public class RecordNotFoundException extends RuntimeException {
 

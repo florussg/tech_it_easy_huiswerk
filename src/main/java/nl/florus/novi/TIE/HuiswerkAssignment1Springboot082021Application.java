@@ -1,4 +1,4 @@
-package nl.florus.novi.huiswerk_assignment1springboot082021;
+package nl.florus.novi.TIE;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

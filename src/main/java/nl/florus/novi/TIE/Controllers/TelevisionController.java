@@ -1,7 +1,5 @@
-package nl.florus.novi.huiswerk_assignment1springboot082021.Controllers;
+package nl.florus.novi.TIE.Controllers;
 
-import nl.florus.novi.huiswerk_assignment1springboot082021.Exceptions.RecordNotFoundException;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,3 +58,29 @@ public class TelevisionController {
             }
 
 }
+
+
+//@RestController
+//public class BookController {
+//
+//    //attribuut
+//    private List<Book> book = new ArrayList<>();
+//
+//    //constructor - Het toevoegen van testwaarden
+//    public BookController() {
+//        Book boek1 = new Book();
+//        boek1.setTitle("Harry Potter");
+//        boek1.setAuthor("Rowling");
+//        boek1.setIsbn("12245566");
+//
+//        book.add(boek1);
+//    }
+//
+//    @GetMapping (value ="/books")
+//    public ResponseEntity<Object> getBooks() {
+//        return ResponseEntity.ok(book);
+//    }
+//
+//
+//
+//}

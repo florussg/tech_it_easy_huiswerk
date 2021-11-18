@@ -1,6 +1,6 @@
-package nl.florus.novi.huiswerk_assignment1springboot082021.Controllers;
+package nl.florus.novi.TIE.Controllers;
 
-import nl.florus.novi.huiswerk_assignment1springboot082021.Exceptions.RecordNotFoundException;
+import nl.florus.novi.TIE.Exceptions.RecordNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
