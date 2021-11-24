@@ -28,7 +28,6 @@ public class TelevisionController {
         return ResponseEntity.ok().body(television);
     }
 
-
     //Via Postman de waarde van 1 televisie terug krijgen
     @GetMapping (value = "/televisions/{id}")
     public String getOneTelevision (@PathVariable int id) {
@@ -56,7 +55,6 @@ public class TelevisionController {
         television.set(id, televisionname);
         return televisionname + " has been succesfully replaced at id-number: " + id;
             }
-
 }
 
 

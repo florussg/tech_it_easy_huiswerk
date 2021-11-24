@@ -29,11 +29,13 @@ public class Television {
     private Integer sold;
 
 
-    //default constructor
+    //Default constructor
+    //Is noodzakelijk in het geval dat er een constructor wordt meegegeven met niet ale attributen
+    //zoals hieronder
     public Television(){
     }
 
-    //overige constructors
+    //Overige constructors
     public Television(String type, String brand, String name) {
         this.type = type;
         this.brand = brand;
@@ -155,7 +157,7 @@ public class Television {
 }
 
 
-//    method
+//    methodes?
 //    bevat soms toString,
 
 
