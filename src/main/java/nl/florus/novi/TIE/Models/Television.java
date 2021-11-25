@@ -35,10 +35,10 @@ public class Television {
     public Television(){
     }
 
-    //Overige constructors
-    public Television(String type, String brand, String name) {
-        this.type = type;
+    //Overige constructors met drie attributen
+    public Television(String brand, String type, String name) {
         this.brand = brand;
+        this.type = type;
         this.name = name;
     }
 

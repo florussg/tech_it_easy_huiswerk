@@ -1,9 +1,14 @@
 package nl.florus.novi.TIE.Controllers;
 
+import nl.florus.novi.TIE.Models.Television;
+import nl.florus.novi.TIE.Repositories.TelevisionRepository;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,37 +16,45 @@ import java.util.List;
 public class TelevisionController {
 
     //attribuut
-    private List<String> television = new ArrayList<>();
+    private List<Television> televisions = new ArrayList<>();
 
     //constructor - Het toevoegen van testwaarden
     public TelevisionController() {
-        television.add("test");
-        television.add("test 2");
+        Television televisie1 = new Television("Samsung", "A123", "Samsung A123 Oled");
+        Television televisie2 = new Television("LG", "B987", "LG B987 4K");
+        televisions.add(televisie1);
+        televisions.add(televisie2);
     }
 
     //Via postmen de waarde van alle televisies terug krijgen
     @GetMapping (value = "/televisions")
     @ResponseStatus(HttpStatus.OK)
-        public ResponseEntity<List<String>> getAllTelevisions() {
-        //public List<String> getAllTelevisions() {
-        //return television;
-        return ResponseEntity.ok().body(television);
+    public ResponseEntity<Object> getAllTelevisions() {
+        return ResponseEntity.ok(televisions);
     }
 
     //Via Postman de waarde van 1 televisie terug krijgen
     @GetMapping (value = "/televisions/{id}")
-    public String getOneTelevision (@PathVariable int id) {
-//        if (television.contains(id)) {
-            return television.get(id);
-//        } else throw new RecordNotFoundException("ID can not be found");
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Object> getOneTelevision (@PathVariable int id) {
+        return ResponseEntity.ok(televisions.get(id));
     }
 
     //Via Postman 1 televisie toevoegen aan de ArrayList
-    @PostMapping(value = "/televisions")
-    public String addTelevision (@RequestBody String nametelevision) {
-        television.add(nametelevision);
-        return "added";
+    @PostMapping(value = "/televisions/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Object> addTelevision (@RequestBody Television television) {
+        televisions.add(television);
+        int newId = televisions.size() -1;
+        Television newTelevision = TelevisionRepository.save(television);
+
+        Book newBook = bookRepository.save(book);
+        int newId = book.getId();
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newId).toUri();
     }
+
 
     //Via Postman 1 televisie verwijderen uit de ArrayList
     @DeleteMapping (value = "/televisions/{id}")
