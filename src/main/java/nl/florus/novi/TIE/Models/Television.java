@@ -30,7 +30,7 @@ public class Television {
 
 
     //Default constructor
-    //Is noodzakelijk in het geval dat er een constructor wordt meegegeven met niet ale attributen
+    //Is noodzakelijk in het geval dat er een constructor wordt meegegeven met niet alle attributen
     //zoals hieronder
     public Television(){
     }
