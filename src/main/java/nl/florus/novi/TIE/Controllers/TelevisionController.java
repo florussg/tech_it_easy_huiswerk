@@ -40,58 +40,41 @@ public class TelevisionController {
         return ResponseEntity.ok(televisions.get(id));
     }
 
-    //Via Postman 1 televisie toevoegen aan de ArrayList
+    //Via Postman 1 televisie verwijderen uit de ArrayList
+    @DeleteMapping (value = "/televisions/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Object> deleteTelevision(@PathVariable int id) {
+        televisions.remove(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    //Via Postman 1 televisie object toevoegen aan televisions ArrayList
     @PostMapping(value = "/televisions/add")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> addTelevision (@RequestBody Television television) {
         televisions.add(television);
         int newId = televisions.size() -1;
-        Television newTelevision = TelevisionRepository.save(television);
-
-        Book newBook = bookRepository.save(book);
-        int newId = book.getId();
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newId).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
-
-    //Via Postman 1 televisie verwijderen uit de ArrayList
-    @DeleteMapping (value = "/televisions/{id}")
-    public String deleteTelevision(@PathVariable int id) {
-        television.remove(id);
-        return "deleted";
-    }
-    //De PUT request die de waarde van een televisie veranderd via Postman
+    //De PUT request die de waarde van een televisie volledig veranderd via Postman
     @PutMapping (value = "/televisions/{id}")
-    public String alterTelevision(@PathVariable int id, @RequestBody String televisionname) {
-        television.set(id, televisionname);
-        return televisionname + " has been succesfully replaced at id-number: " + id;
-            }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity alterTelevision(@PathVariable int id, @RequestBody Television television) {
+        televisions.set(id, television);
+        return ResponseEntity.noContent().build();
+    }
+
+    //De PATCH request die de waarde van een televisie gedeelterlijk veranderd via Postman
+    // LET OP: Is niet compleet afgemaakt. Om deze af te maken werk je met if statements om te kijken of de waarde die mee wordt gegeven leeg is of niet
+    @PatchMapping(value = "/televisions/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity alterTelevisionpartial(@PathVariable int id, @RequestBody Television television) {
+        televisions.set(id, television);
+        return ResponseEntity.noContent().build();
+    }
 }
-
-
-//@RestController
-//public class BookController {
-//
-//    //attribuut
-//    private List<Book> book = new ArrayList<>();
-//
-//    //constructor - Het toevoegen van testwaarden
-//    public BookController() {
-//        Book boek1 = new Book();
-//        boek1.setTitle("Harry Potter");
-//        boek1.setAuthor("Rowling");
-//        boek1.setIsbn("12245566");
-//
-//        book.add(boek1);
-//    }
-//
-//    @GetMapping (value ="/books")
-//    public ResponseEntity<Object> getBooks() {
-//        return ResponseEntity.ok(book);
-//    }
-//
-//
-//
-//}
