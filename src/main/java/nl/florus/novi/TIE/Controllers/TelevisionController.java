@@ -81,6 +81,7 @@ public class TelevisionController {
     }
 
     //De PATCH request die een gedeeltelijke waarde van een bestaande televisie veranderd via Postman
+    //WERKT MOMENTEEL NIET. ZIE LES 18-11-2021 37-38 MINUTEN
     @PatchMapping (value = "/televisions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> partialChangeTelevision(@PathVariable Long id, @RequestBody Television television) {
