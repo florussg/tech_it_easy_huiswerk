@@ -3,95 +3,104 @@ package nl.florus.novi.TIE.Controllers;
 import nl.florus.novi.TIE.Models.Television;
 import nl.florus.novi.TIE.Repositories.TelevisionRepository;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @RestController
 public class TelevisionController {
 
-    //attribuut
-    private List<Television> televisions = new ArrayList<>();
+    @Autowired
+    private TelevisionRepository televisionRepository;
 
     //constructor - Het toevoegen van testwaarden
     public TelevisionController() {
         Television televisie1 = new Television("Samsung", "A123", "Samsung A123 Oled");
         Television televisie2 = new Television("LG", "B987", "LG B987 4K");
-        televisions.add(televisie1);
-        televisions.add(televisie2);
+
+        Television newTv = new Television();
+        newTv.setBrand("Apple");
+        newTv.setType("telly");
+        newTv.setName("Best Telly Ever");
     }
 
-    //Via postmen de waarde van alle televisies terug krijgen
+    //Via postmen de waarde van alle televisies terug krijgen uit de database
     @GetMapping (value = "/televisions")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getAllTelevisions() {
-        return ResponseEntity.ok(televisions);
+        return ResponseEntity.ok(televisionRepository.findAll());
     }
 
-    //Via Postman de waarde van 1 televisie terug krijgen
+    //Via Postman de waarde van 1 televisie terug krijgen uit de database
     @GetMapping (value = "/televisions/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> getOneTelevision (@PathVariable int id) {
-        return ResponseEntity.ok(televisions.get(id));
+    public ResponseEntity<Object> getOneTelevision (@PathVariable Long id) {
+        return ResponseEntity.ok(televisionRepository.findById(id));
     }
 
-    //Via Postman 1 televisie toevoegen aan de ArrayList
+    //Via Postman 1 televisie toevoegen aan de database
     @PostMapping(value = "/televisions/add")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> addTelevision (@RequestBody Television television) {
-        televisions.add(television);
-        int newId = televisions.size() -1;
-        Television newTelevision = TelevisionRepository.save(television);
-
-        Book newBook = bookRepository.save(book);
-        int newId = book.getId();
+        Television newTelevision = televisionRepository.save(television);
+        Long newId = television.getId();
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newId).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
-
-    //Via Postman 1 televisie verwijderen uit de ArrayList
+    //Via Postman 1 televisie verwijderen uit de database
     @DeleteMapping (value = "/televisions/{id}")
-    public String deleteTelevision(@PathVariable int id) {
-        television.remove(id);
+    public String deleteTelevision(@PathVariable Long id) {
+        televisionRepository.deleteById(id);
         return "deleted";
     }
-    //De PUT request die de waarde van een televisie veranderd via Postman
+    //De PUT request die de volledige waarden van een bestaande televisie veranderd via Postman
     @PutMapping (value = "/televisions/{id}")
-    public String alterTelevision(@PathVariable int id, @RequestBody String televisionname) {
-        television.set(id, televisionname);
-        return televisionname + " has been succesfully replaced at id-number: " + id;
-            }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Object> alterTelevision(@PathVariable Long id, @RequestBody Television television) {
+        Television excistingTelevision = televisionRepository.findById(id).orElse(null);
+
+        if (!television.getName().isEmpty()) {
+            excistingTelevision.setName(television.getName());
+        }
+        if (!television.getBrand().isEmpty()) {
+            excistingTelevision.setBrand(television.getBrand());
+        }
+        if (!television.getType().isEmpty()) {
+            excistingTelevision.setType(television.getType());
+        }
+        televisionRepository.save(excistingTelevision);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    //De PATCH request die een gedeeltelijke waarde van een bestaande televisie veranderd via Postman
+    @PatchMapping (value = "/televisions/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Object> partialChangeTelevision(@PathVariable Long id, @RequestBody Television television) {
+        Television excistingTelevision = televisionRepository.findById(id).orElse(null);
+
+        if (!television.getName().isEmpty()) {
+            excistingTelevision.setName(television.getName());
+        }
+        if (!television.getBrand().isEmpty()) {
+            excistingTelevision.setBrand(television.getBrand());
+        }
+        if (!television.getType().isEmpty()) {
+            excistingTelevision.setType(television.getType());
+        }
+        televisionRepository.save(excistingTelevision);
+
+        return ResponseEntity.noContent().build();
+    }
 }
 
 
-//@RestController
-//public class BookController {
-//
-//    //attribuut
-//    private List<Book> book = new ArrayList<>();
-//
-//    //constructor - Het toevoegen van testwaarden
-//    public BookController() {
-//        Book boek1 = new Book();
-//        boek1.setTitle("Harry Potter");
-//        boek1.setAuthor("Rowling");
-//        boek1.setIsbn("12245566");
-//
-//        book.add(boek1);
-//    }
-//
-//    @GetMapping (value ="/books")
-//    public ResponseEntity<Object> getBooks() {
-//        return ResponseEntity.ok(book);
-//    }
-//
-//
-//
-//}
+

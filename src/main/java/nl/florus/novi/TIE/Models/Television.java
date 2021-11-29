@@ -43,6 +43,11 @@ public class Television {
     }
 
     //getters en setters
+
+    public Long getId() {
+        return id;
+    }
+
     public String getType() {
         return type;
     }
@@ -155,7 +160,6 @@ public class Television {
         this.sold = sold;
     }
 }
-
 
 //    methodes?
 //    bevat soms toString,
