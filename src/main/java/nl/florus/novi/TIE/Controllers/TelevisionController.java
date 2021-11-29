@@ -2,7 +2,6 @@ package nl.florus.novi.TIE.Controllers;
 
 import nl.florus.novi.TIE.Models.Television;
 import nl.florus.novi.TIE.Repositories.TelevisionRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +46,7 @@ public class TelevisionController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> addTelevision (@RequestBody Television television) {
         Television newTelevision = televisionRepository.save(television);
-        Long newId = television.getId();
+        Long newId = newTelevision.getId();
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newId).toUri();
@@ -89,7 +88,7 @@ public class TelevisionController {
 
         if (!television.getName().isEmpty()) {
             excistingTelevision.setName(television.getName());
-        }
+        } else
         if (!television.getBrand().isEmpty()) {
             excistingTelevision.setBrand(television.getBrand());
         }
