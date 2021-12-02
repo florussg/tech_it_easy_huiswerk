@@ -1,5 +1,6 @@
 package nl.florus.novi.TIE.Services;
 
+import nl.florus.novi.TIE.Exceptions.RecordNotFoundException;
 import nl.florus.novi.TIE.Models.Television;
 import nl.florus.novi.TIE.Repositories.TelevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,12 @@ public class TelevisionService {
 
     //Geeft 1 object television terug, vandaar de "public Television"
     //Dit wordt een Optional
-    public Optional<Television> getOneTelevision (Long id) {
-        return televisionRepository.findById(id);
-        //return televisionRepository.findById(id);
+    public Television getOneTelevision (Long id) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
+        if(optionalTelevision.isPresent()) {
+            return optionalTelevision.get();
+        }
+        else { throw new RecordNotFoundException("ID bestaat niet");}
     }
 
     public Long addTelevision (Television television) {

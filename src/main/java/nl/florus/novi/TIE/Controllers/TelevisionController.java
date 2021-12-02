@@ -1,7 +1,6 @@
 package nl.florus.novi.TIE.Controllers;
 
 import nl.florus.novi.TIE.Models.Television;
-import nl.florus.novi.TIE.Repositories.TelevisionRepository;
 import nl.florus.novi.TIE.Services.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
