@@ -23,7 +23,6 @@ public class TelevisionService {
     }
 
     //Geeft 1 object television terug, vandaar de "public Television"
-    //Dit wordt een Optional
     public Television getOneTelevision (Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
         if(optionalTelevision.isPresent()) {
@@ -39,7 +38,7 @@ public class TelevisionService {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newId).toUri();
 
-        return newTelevision.getId();
+        return newTelevision.getId() ;
     }
 
     //Via Postman 1 televisie verwijderen uit de database
