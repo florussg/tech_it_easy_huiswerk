@@ -2,6 +2,7 @@ package nl.florus.novi.TIE.Controllers;
 
 import nl.florus.novi.TIE.Models.Television;
 import nl.florus.novi.TIE.Repositories.TelevisionRepository;
+import nl.florus.novi.TIE.Services.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.net.URI;
 public class TelevisionController {
 
     @Autowired
-    private TelevisionRepository televisionRepository;
+    private TelevisionService televisionService;
 
     //constructor - Het toevoegen van testwaarden
     public TelevisionController() {
@@ -31,52 +32,43 @@ public class TelevisionController {
     @GetMapping (value = "/televisions")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getAllTelevisions() {
-        return ResponseEntity.ok(televisionRepository.findAll());
+
+        return ResponseEntity.ok(televisionService.getAllTelevisions());
     }
 
     //Via Postman de waarde van 1 televisie terug krijgen uit de database
     @GetMapping (value = "/televisions/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getOneTelevision (@PathVariable Long id) {
-        return ResponseEntity.ok(televisionRepository.findById(id));
+
+        return ResponseEntity.ok(televisionService.getOneTelevision(id));
     }
 
     //Via Postman 1 televisie toevoegen aan de database
     @PostMapping(value = "/televisions/add")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> addTelevision (@RequestBody Television television) {
-        Television newTelevision = televisionRepository.save(television);
-        Long newId = newTelevision.getId();
 
+        Long newId = televisionService.addTelevision(television);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newId).toUri();
-
         return ResponseEntity.created(location).build();
     }
 
     //Via Postman 1 televisie verwijderen uit de database
     @DeleteMapping (value = "/televisions/{id}")
-    public String deleteTelevision(@PathVariable Long id) {
-        televisionRepository.deleteById(id);
-        return "deleted";
+    public ResponseEntity<Object> deleteTelevision(@PathVariable Long id) {
+
+        televisionService.deleteTelevision(id);
+        return ResponseEntity.noContent().build();
     }
+
     //De PUT request die de volledige waarden van een bestaande televisie veranderd via Postman
     @PutMapping (value = "/televisions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> alterTelevision(@PathVariable Long id, @RequestBody Television television) {
-        Television excistingTelevision = televisionRepository.findById(id).orElse(null);
 
-        if (!television.getName().isEmpty()) {
-            excistingTelevision.setName(television.getName());
-        }
-        if (!television.getBrand().isEmpty()) {
-            excistingTelevision.setBrand(television.getBrand());
-        }
-        if (!television.getType().isEmpty()) {
-            excistingTelevision.setType(television.getType());
-        }
-        televisionRepository.save(excistingTelevision);
-
+        televisionService.alterTelevision(id, television);
         return ResponseEntity.noContent().build();
     }
 
@@ -85,19 +77,8 @@ public class TelevisionController {
     @PatchMapping (value = "/televisions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> partialChangeTelevision(@PathVariable Long id, @RequestBody Television television) {
-        Television excistingTelevision = televisionRepository.findById(id).orElse(null);
 
-        if (!television.getName().isEmpty()) {
-            excistingTelevision.setName(television.getName());
-        } else
-        if (!television.getBrand().isEmpty()) {
-            excistingTelevision.setBrand(television.getBrand());
-        }
-        if (!television.getType().isEmpty()) {
-            excistingTelevision.setType(television.getType());
-        }
-        televisionRepository.save(excistingTelevision);
-
+        televisionService.partialChangeTelevision(id, television);
         return ResponseEntity.noContent().build();
     }
 }
