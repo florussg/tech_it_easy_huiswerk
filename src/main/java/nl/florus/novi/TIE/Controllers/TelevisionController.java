@@ -1,5 +1,6 @@
 package nl.florus.novi.TIE.Controllers;
 
+import nl.florus.novi.TIE.Dtos.TelevisionInputDto;
 import nl.florus.novi.TIE.Models.Television;
 import nl.florus.novi.TIE.Services.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
 import java.net.URI;
 
 
@@ -18,13 +21,13 @@ public class TelevisionController {
 
     //constructor - Het toevoegen van testwaarden
     public TelevisionController() {
-        Television televisie1 = new Television("Samsung", "A123", "Samsung A123 Oled");
+        Television televisie1 = new Television("Samsung", "A123", "test");
         Television televisie2 = new Television("LG", "B987", "LG B987 4K");
 
         Television newTv = new Television();
         newTv.setBrand("Apple");
         newTv.setType("telly");
-        newTv.setName("Best Telly Ever");
+        newTv.setUniqueName("Best Telly Ever");
     }
 
     //Via postmen de waarde van alle televisies terug krijgen uit de database
@@ -46,7 +49,7 @@ public class TelevisionController {
     //Via Postman 1 televisie toevoegen aan de database
     @PostMapping(value = "/televisions/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> addTelevision (@RequestBody Television television) {
+    public ResponseEntity<Object> addTelevision (@Valid @RequestBody TelevisionInputDto television) {
 
         Long newId = televisionService.addTelevision(television);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
