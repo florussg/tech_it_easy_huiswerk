@@ -19,17 +19,6 @@ public class TelevisionController {
     @Autowired
     private TelevisionService televisionService;
 
-    //constructor - Het toevoegen van testwaarden
-//    public TelevisionController() {
-//        Television televisie1 = new Television("Samsung", "A123", "test");
-//        Television televisie2 = new Television("LG", "B987", "LG B987 4K");
-//
-//        Television newTv = new Television();
-//        newTv.setBrand("Apple");
-//        newTv.setType("telly");
-//        newTv.setUniqueName("Best Telly Ever");
-//    }
-
     //Via postmen de waarde van alle televisies terug krijgen uit de database
     @GetMapping (value = "/televisions")
     @ResponseStatus(HttpStatus.OK)

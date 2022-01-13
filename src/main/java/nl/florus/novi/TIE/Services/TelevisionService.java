@@ -8,9 +8,6 @@ import nl.florus.novi.TIE.Repositories.TelevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,18 +56,19 @@ public class TelevisionService {
     }
 
     public void alterTelevision(@PathVariable Long id, @RequestBody Television television) {
-        Television excistingTelevision = televisionRepository.findById(id).orElse(null);
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
 
-        if (!television.getUniqueName().isEmpty()) {
-            excistingTelevision.setUniqueName(television.getUniqueName());
+        if (optionalTelevision.isPresent()) {
+            Television storedTelevision = optionalTelevision.get();
+
+            television.setId(storedTelevision.getId());
+
+            televisionRepository.save(television);
         }
-        if (!television.getBrand().isEmpty()) {
-            excistingTelevision.setBrand(television.getBrand());
+        else {
+            throw new RecordNotFoundException("The television ID does not exist");
         }
-        if (!television.getType().isEmpty()) {
-            excistingTelevision.setType(television.getType());
-        }
-        televisionRepository.save(excistingTelevision);
+
 
     }
 
@@ -99,16 +97,11 @@ public class TelevisionService {
 
             televisionRepository.save(storedTelevision);
         } else {
-            throw new RecordNotFoundException("Television ID " + television.getId() + "does not exist");
+            throw new RecordNotFoundException("The television ID does not exist");
         }
     }
 }
 
-
-//    "type": "1245556563",
-//            "brand": "toevoegen van een 6e tv 13-1-2022 met prijs",
-//            "uniqueName": "ffd5e565fdg",
-//            "price": "1000"
 
 
 
