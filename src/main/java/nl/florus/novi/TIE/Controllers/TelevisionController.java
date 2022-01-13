@@ -22,8 +22,8 @@ public class TelevisionController {
     //Via postmen de waarde van alle televisies terug krijgen uit de database
     @GetMapping (value = "/televisions")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> getAllTelevisions() {
-        return ResponseEntity.ok(televisionService.getAllTelevisions());
+    public ResponseEntity<Object> getAllTelevisions(@RequestParam(name="uniquename", defaultValue = "") String uniquename) {
+        return ResponseEntity.ok(televisionService.getAllTelevisions(uniquename));
     }
 
     //Via Postman de waarde van 1 televisie terug krijgen uit de database

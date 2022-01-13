@@ -18,8 +18,15 @@ public class TelevisionService {
     @Autowired
     private TelevisionRepository televisionRepository;
 
-    public Iterable<Television> getAllTelevisions() {
-        return televisionRepository.findAll();
+    public Iterable<Television> getAllTelevisions(String uniquename) {
+        if (uniquename.isEmpty()) {
+            return televisionRepository.findAll();
+        }
+        else {
+            return televisionRepository.findAllByUniqueNameContainingIgnoreCase(uniquename);
+        }
+
+
     }
 
     //Geeft 1 object television terug, vandaar de "public Television"
