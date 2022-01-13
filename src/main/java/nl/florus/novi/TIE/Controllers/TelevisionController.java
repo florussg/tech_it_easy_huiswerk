@@ -20,21 +20,20 @@ public class TelevisionController {
     private TelevisionService televisionService;
 
     //constructor - Het toevoegen van testwaarden
-    public TelevisionController() {
-        Television televisie1 = new Television("Samsung", "A123", "test");
-        Television televisie2 = new Television("LG", "B987", "LG B987 4K");
-
-        Television newTv = new Television();
-        newTv.setBrand("Apple");
-        newTv.setType("telly");
-        newTv.setUniqueName("Best Telly Ever");
-    }
+//    public TelevisionController() {
+//        Television televisie1 = new Television("Samsung", "A123", "test");
+//        Television televisie2 = new Television("LG", "B987", "LG B987 4K");
+//
+//        Television newTv = new Television();
+//        newTv.setBrand("Apple");
+//        newTv.setType("telly");
+//        newTv.setUniqueName("Best Telly Ever");
+//    }
 
     //Via postmen de waarde van alle televisies terug krijgen uit de database
     @GetMapping (value = "/televisions")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getAllTelevisions() {
-
         return ResponseEntity.ok(televisionService.getAllTelevisions());
     }
 
@@ -42,7 +41,6 @@ public class TelevisionController {
     @GetMapping (value = "/televisions/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getOneTelevision (@PathVariable Long id) {
-
         return ResponseEntity.ok(televisionService.getOneTelevision(id));
     }
 
@@ -60,7 +58,6 @@ public class TelevisionController {
     //Via Postman 1 televisie verwijderen uit de database
     @DeleteMapping (value = "/televisions/{id}")
     public ResponseEntity<Object> deleteTelevision(@PathVariable Long id) {
-
         televisionService.deleteTelevision(id);
         return ResponseEntity.noContent().build();
     }

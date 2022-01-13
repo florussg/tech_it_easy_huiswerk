@@ -26,17 +26,18 @@ public class TelevisionService {
     }
 
     //Geeft 1 object television terug, vandaar de "public Television"
-    public Television getOneTelevision (Long id) {
+    public Television getOneTelevision(Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
-        if(optionalTelevision.isPresent()) {
+        if (optionalTelevision.isPresent()) {
             return optionalTelevision.get();
+        } else {
+            throw new RecordNotFoundException("ID bestaat niet");
         }
-        else { throw new RecordNotFoundException("ID bestaat niet");}
     }
 
-    public Long addTelevision (TelevisionInputDto televisionInputDto) {
+    public Long addTelevision(TelevisionInputDto televisionInputDto) {
         String uniqueName = televisionInputDto.getUniqueName();
-        List<Television> televisions = (List<Television>)televisionRepository.findAllByUniqueName(uniqueName);
+        List<Television> televisions = (List<Television>) televisionRepository.findAllByUniqueName(uniqueName);
         if (televisions.size() > 0) {
             throw new BadRequestException("this TV already exists");
         }
@@ -45,6 +46,7 @@ public class TelevisionService {
         newTelevision.setBrand(televisionInputDto.getBrand());
         newTelevision.setType(televisionInputDto.getType());
         newTelevision.setUniqueName(televisionInputDto.getUniqueName());
+        newTelevision.setPrice(televisionInputDto.getPrice());
 
         Television newTelevisionSave = televisionRepository.save(newTelevision);
         return newTelevisionSave.getId();
@@ -73,23 +75,40 @@ public class TelevisionService {
     }
 
     public void partialChangeTelevision(@PathVariable Long id, @RequestBody Television television) {
-        Television excistingTelevision = televisionRepository.findById(id).orElse(null);
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
 
-        if (!television.getUniqueName().isEmpty()) {
-            excistingTelevision.setUniqueName(television.getUniqueName());
-        } else
-        if (!television.getBrand().isEmpty()) {
-            excistingTelevision.setBrand(television.getBrand());
-        }
-        if (!television.getType().isEmpty()) {
-            excistingTelevision.setType(television.getType());
-        }
-        televisionRepository.save(excistingTelevision);
+        if (optionalTelevision.isPresent()) {
+            Television storedTelevision = televisionRepository.findById(id).orElse(null);
 
+
+            if (television.getType() != null && !television.getType().isEmpty()) {
+                storedTelevision.setType(television.getType());
+            }
+
+            if (television.getBrand() != null && !television.getBrand().isEmpty()) {
+                storedTelevision.setBrand(television.getBrand());
+            }
+
+            if (television.getUniqueName() != null && !television.getUniqueName().isEmpty()) {
+                storedTelevision.setUniqueName(television.getUniqueName());
+            }
+
+            if (television.getPrice() != null) {
+                storedTelevision.setPrice(television.getPrice());
+            }
+
+            televisionRepository.save(storedTelevision);
+        } else {
+            throw new RecordNotFoundException("Television ID " + television.getId() + "does not exist");
+        }
     }
 }
 
 
+//    "type": "1245556563",
+//            "brand": "toevoegen van een 6e tv 13-1-2022 met prijs",
+//            "uniqueName": "ffd5e565fdg",
+//            "price": "1000"
 
 
 

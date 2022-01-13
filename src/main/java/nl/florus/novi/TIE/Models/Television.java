@@ -28,7 +28,6 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-
     //Default constructor
     //Is noodzakelijk in het geval dat er een constructor wordt meegegeven met niet alle attributen, zoals hieronder
     public Television(){

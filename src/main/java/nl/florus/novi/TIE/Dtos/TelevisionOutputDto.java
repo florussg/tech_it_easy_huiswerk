@@ -1,9 +1,5 @@
 package nl.florus.novi.TIE.Dtos;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 public class TelevisionOutputDto {
 
     //attributen, ZONDER ID
@@ -25,7 +21,6 @@ public class TelevisionOutputDto {
     private Integer sold;
 
     //getters en setters
-
 
     public String getType() {
         return type;

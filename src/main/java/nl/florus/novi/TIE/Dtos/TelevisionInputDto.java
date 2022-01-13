@@ -9,7 +9,7 @@ public class TelevisionInputDto {
     //attributen zonder ID
 
     @NotBlank
-    @Size(min=1, max=5)
+    @Size(min=1, max=10)
     private String type;
 
     @NotBlank
@@ -34,7 +34,6 @@ public class TelevisionInputDto {
     private Integer sold;
 
     //getters en setters
-
 
     public String getType() {
         return type;
