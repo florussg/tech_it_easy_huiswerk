@@ -25,8 +25,6 @@ public class TelevisionService {
         else {
             return televisionRepository.findAllByUniqueNameContainingIgnoreCase(uniquename);
         }
-
-
     }
 
     //Geeft 1 object television terug, vandaar de "public Television"
@@ -54,7 +52,6 @@ public class TelevisionService {
 
         Television newTelevisionSave = televisionRepository.save(newTelevision);
         return newTelevisionSave.getId();
-
     }
 
     //Via Postman 1 televisie verwijderen uit de database
@@ -75,8 +72,6 @@ public class TelevisionService {
         else {
             throw new RecordNotFoundException("The television ID does not exist");
         }
-
-
     }
 
     public void partialChangeTelevision(@PathVariable Long id, @RequestBody Television television) {
