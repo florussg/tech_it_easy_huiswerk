@@ -1,18 +1,16 @@
 package nl.florus.novi.TIE.Controllers;
-
 import nl.florus.novi.TIE.Dtos.CiModuleDto;
 import nl.florus.novi.TIE.Services.CiModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 
+@RestController
 public class CiModuleController {
 
     @Autowired
@@ -28,4 +26,12 @@ public class CiModuleController {
                 .buildAndExpand(newId).toUri();
         return ResponseEntity.created(location).build();
     }
+
+    //Via postmen de waarde van alle televisies terug krijgen uit de database
+    @GetMapping(value = "/cimodule")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Object> getAllCiModules(@RequestParam(name="name", defaultValue = "") String name) {
+        return ResponseEntity.ok(ciModuleService.getAllCiModules(name));
+    }
+
 }

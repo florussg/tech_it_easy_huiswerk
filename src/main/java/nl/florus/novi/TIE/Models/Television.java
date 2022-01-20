@@ -1,6 +1,8 @@
 package nl.florus.novi.TIE.Models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "televisions")
@@ -27,6 +29,9 @@ public class Television {
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
+
+    @OneToMany
+    private List<CiModule> cimodules = new ArrayList<>();
 
     //Default constructor
     //Is noodzakelijk in het geval dat er een constructor wordt meegegeven met niet alle attributen, zoals hieronder
@@ -156,6 +161,14 @@ public class Television {
     }
     public void setSold(Integer sold) {
         this.sold = sold;
+    }
+
+    public List<CiModule> getCimodules() {
+        return cimodules;
+    }
+
+    public void setCimodules(List<CiModule> cimodules) {
+        this.cimodules = cimodules;
     }
 }
 

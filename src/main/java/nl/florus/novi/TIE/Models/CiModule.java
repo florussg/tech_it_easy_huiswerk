@@ -1,9 +1,9 @@
 package nl.florus.novi.TIE.Models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+//@Table(name = "cimodules")
 public class CiModule {
 
     //attributen

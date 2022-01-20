@@ -1,7 +1,6 @@
 package nl.florus.novi.TIE.Services;
 
 import nl.florus.novi.TIE.Dtos.TelevisionInputDto;
-import nl.florus.novi.TIE.Dtos.TelevisionOutputDto;
 import nl.florus.novi.TIE.Exceptions.BadRequestException;
 import nl.florus.novi.TIE.Exceptions.RecordNotFoundException;
 import nl.florus.novi.TIE.Models.Television;

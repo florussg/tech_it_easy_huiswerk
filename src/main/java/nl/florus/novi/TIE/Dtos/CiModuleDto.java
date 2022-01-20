@@ -3,18 +3,16 @@ package nl.florus.novi.TIE.Dtos;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-
 public class CiModuleDto {
 
     //attributen
-    @NotBlank
+    //@NotBlank
     private String name;
 
-    @NotBlank
+    //@NotBlank
     private String type;
 
-    @NotBlank
-    @Size(min=5, max=150)
+    //@NotBlank
     private double price;
 
     //GETTERS
