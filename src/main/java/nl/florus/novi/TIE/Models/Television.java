@@ -3,6 +3,7 @@ package nl.florus.novi.TIE.Models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "televisions")
@@ -37,8 +38,11 @@ public class Television {
     private RemoteController remoteController;
 
     @ManyToMany
-    private List<Wallbracket> wallBracket;
-
+    @JoinTable (
+            name = "TelevisionWallBrackets",
+            joinColumns = @JoinColumn(name="television_id"),
+            inverseJoinColumns = @JoinColumn(name= "remote_controller_id"))
+    private Set<Wallbracket> wallBracket;
 
     //Default constructor
     //Is noodzakelijk in het geval dat er een constructor wordt meegegeven met niet alle attributen, zoals hieronder

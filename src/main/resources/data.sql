@@ -8,3 +8,6 @@ INSERT INTO ci_module (id,name,type,price) VALUES (1002, 'eerstecimodule', 'type
 INSERT INTO ci_module (id,name,type,price) VALUES (1003, 'tweedecimodule', 'type_987', '11');
 
 INSERT INTO remote_controller (id, battery_type, brand, compatible_with, name, original_stock, price) VALUES (1, 'litium', 'samsung', 'alletvs', 'samsungs1', 100, 10.0);
+
+INSERT INTO wallbracket (id, ajustable, name, price, size) VALUES (1, false, 'glennsbracket', 38, '25 inch');
+INSERT INTO wallbracket (id, ajustable, name, price, size) VALUES (2, true, 'richiesbracket', 22, '21 inch');

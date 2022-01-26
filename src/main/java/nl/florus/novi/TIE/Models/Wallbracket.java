@@ -2,6 +2,7 @@ package nl.florus.novi.TIE.Models;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Wallbracket {
@@ -19,6 +20,6 @@ public class Wallbracket {
 
     private double price;
 
-    @ManyToMany
-    private List<Television> television;
+    @ManyToMany (mappedBy = "wallBracket")
+    private Set<Television> television;
 }
