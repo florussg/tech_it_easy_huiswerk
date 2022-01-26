@@ -7,3 +7,4 @@ INSERT INTO televisions (id, type, brand, unique_name, price, available_size, re
 INSERT INTO ci_module (id,name,type,price) VALUES (1002, 'eerstecimodule', 'type_123', '10');
 INSERT INTO ci_module (id,name,type,price) VALUES (1003, 'tweedecimodule', 'type_987', '11');
 
+INSERT INTO remote_controller (id, battery_type, brand, compatible_with, name, original_stock, price) VALUES (1, 'litium', 'samsung', 'alletvs', 'samsungs1', 100, 10.0);

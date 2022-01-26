@@ -30,8 +30,15 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-    @OneToMany
-    private List<CiModule> cimodules = new ArrayList<>();
+    @ManyToOne
+    private CiModule ciModule;
+
+    @OneToOne
+    private RemoteController remoteController;
+
+    @ManyToMany
+    private List<Wallbracket> wallBracket;
+
 
     //Default constructor
     //Is noodzakelijk in het geval dat er een constructor wordt meegegeven met niet alle attributen, zoals hieronder
@@ -163,14 +170,25 @@ public class Television {
         this.sold = sold;
     }
 
-    public List<CiModule> getCimodules() {
-        return cimodules;
+    public CiModule getCiModule() {
+        return ciModule;
     }
 
-    public void setCimodules(List<CiModule> cimodules) {
-        this.cimodules = cimodules;
+    public void setCiModule(CiModule ciModule) {
+        this.ciModule = ciModule;
+    }
+
+    public RemoteController getRemoteController() {
+        return remoteController;
+    }
+
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
     }
 }
+
+
+
 
 //    methodes?
 //    bevat soms toString,

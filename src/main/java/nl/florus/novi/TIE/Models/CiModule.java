@@ -1,6 +1,9 @@
 package nl.florus.novi.TIE.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 //@Table(name = "cimodules")
@@ -17,6 +20,9 @@ public class CiModule {
 
     private double price;
 
+    @OneToMany (mappedBy = "ciModule")
+    @JsonIgnore
+    List<Television> television;
 
     public Long getId() {
         return id;
@@ -48,6 +54,14 @@ public class CiModule {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<Television> getTelevision() {
+        return television;
+    }
+
+    public void setTelevision(List<Television> television) {
+        this.television = television;
     }
 }
 

@@ -4,6 +4,7 @@ import nl.florus.novi.TIE.Dtos.TelevisionInputDto;
 import nl.florus.novi.TIE.Exceptions.BadRequestException;
 import nl.florus.novi.TIE.Exceptions.RecordNotFoundException;
 import nl.florus.novi.TIE.Models.Television;
+import nl.florus.novi.TIE.Repositories.RemoteControllerRepository;
 import nl.florus.novi.TIE.Repositories.TelevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,16 @@ import java.util.Optional;
 @Service
 public class TelevisionService {
 
+    private TelevisionRepository televisionRepository;
+    private RemoteControllerRepository remoteControllerRepository;
+
     //connectie tussen service en repository
     @Autowired
-    private TelevisionRepository televisionRepository;
+    public TelevisionService (TelevisionRepository televisionRepository,
+                              RemoteControllerRepository remoteControllerRepository) {
+        this.televisionRepository = televisionRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
+    }
 
     public Iterable<Television> getAllTelevisions(String uniquename) {
         if (uniquename.isEmpty()) {
@@ -100,6 +108,22 @@ public class TelevisionService {
             televisionRepository.save(storedTelevision);
         } else {
             throw new RecordNotFoundException("The television ID does not exist");
+        }
+    }
+
+    public void addRemoteControllerToTelevision (Long id, Long RemotecontrollerId) {
+        var optionalTelevision = televisionRepository.findById(id);
+        var optionalRemoteController = remoteControllerRepository.findById(RemotecontrollerId);
+
+        if (optionalTelevision.isPresent() && optionalRemoteController.isPresent()) {
+            var television = optionalTelevision.get();
+            var remotecontroller = optionalRemoteController.get();
+
+            television.setRemoteController(remotecontroller);
+            televisionRepository.save(television);
+
+        } else {
+            throw new RecordNotFoundException();
         }
     }
 }
