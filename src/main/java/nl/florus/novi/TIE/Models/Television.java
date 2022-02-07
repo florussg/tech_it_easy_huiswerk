@@ -41,7 +41,7 @@ public class Television {
     @JoinTable (
             name = "TelevisionWallBrackets",
             joinColumns = @JoinColumn(name="television_id"),
-            inverseJoinColumns = @JoinColumn(name= "remote_controller_id"))
+            inverseJoinColumns = @JoinColumn(name= "wall_bracket_id"))
     private Set<Wallbracket> wallBracket;
 
     //Default constructor
@@ -188,6 +188,14 @@ public class Television {
 
     public void setRemoteController(RemoteController remoteController) {
         this.remoteController = remoteController;
+    }
+
+    public Set<Wallbracket> getWallBracket() {
+        return wallBracket;
+    }
+
+    public void setWallBracket(Set<Wallbracket> wallBracket) {
+        this.wallBracket = wallBracket;
     }
 }
 
